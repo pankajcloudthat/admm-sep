@@ -120,15 +120,15 @@ REVOKE SELECT ON users FROM 'amit'@'localhost';
 --------------------------------------------
 -- Role
 
-CREATE ROLE IF NOT EXISTS 'TestRole_ReadOnly';
+CREATE ROLE IF NOT EXISTS 'TestRole_ReadOnly'@'%';
 
-GRANT SELECT ON * . * TO 'TestRole_ReadOnly';
+GRANT USAGE, SELECT ON * . * TO 'TestRole_ReadOnly'@'%';
 
-GRANT 'TestRole_ReadOnly' TO 'amit'@'localhost';
+GRANT 'TestRole_ReadOnly'@'%' TO 'amit'@'localhost';
 
-SET DEFAULT ROLE 'TestRole_ReadOnly' TO 'amit'@'localhost';
+SET DEFAULT ROLE 'TestRole_ReadOnly'@'%' TO 'amit'@'localhost';
 
-SHOW GRANTs FOR amit@localhost USING TestRole_ReadOnly;
+SHOW GRANTS FOR 'TestRole_ReadOnly';
+SHOW GRANTs FOR amit@localhost USING 'TestRole_ReadOnly';
 
-
-DROP ROLE TestRole_ReadOnly;
+DROP ROLE 'TestRole_ReadOnly'@'%';
